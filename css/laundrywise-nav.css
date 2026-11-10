@@ -1,0 +1,10 @@
+/* Shared resident navigation — matched to the LaundryWise dashboard */
+.dashboard-nav.lw-prototype-nav{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(100%,1080px);margin:0 auto 30px;padding:10px 12px 10px 18px;box-sizing:border-box;border:1px solid rgba(255,255,255,.88);border-radius:999px;background:rgba(255,255,255,.88);box-shadow:0 8px 26px rgba(73,70,135,.08);backdrop-filter:blur(10px)}
+.dashboard-nav .lw-brand{display:flex;align-items:center;gap:10px;color:#30245f;text-decoration:none;font-weight:800;white-space:nowrap}
+.dashboard-nav .lw-brand-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,#ad72ff,#7543ef);color:#fff;font-size:17px}
+.dashboard-nav .lw-brand-name{font-size:18px;letter-spacing:-.3px}
+.lw-prototype-nav-links{display:flex;align-items:center;justify-content:flex-end;gap:clamp(8px,1.35vw,20px);flex-wrap:wrap}
+.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a{color:#51418B;background:#F0EDFF;padding:10px 15px;border:1px solid transparent;border-radius:12px;text-decoration:none;font-size:12px;font-weight:700;transition:color .15s ease,background .15s ease}
+.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a:hover,.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a:focus-visible,.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a.active{color:#35256F;background:#E2D9FF;border-color:#D1C4FF}
+.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a.lw-nav-logout{padding:10px 17px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#ad72ff,#7543ef);box-shadow:0 4px 10px rgba(117,67,239,.22)}
+@media(max-width:760px){.dashboard-nav.lw-prototype-nav{align-items:flex-start;flex-direction:column;border-radius:24px;padding:14px}.lw-prototype-nav-links{justify-content:flex-start;width:100%;gap:7px}.dashboard-nav.lw-prototype-nav .lw-prototype-nav-links a{padding:9px 11px;font-size:12px}}

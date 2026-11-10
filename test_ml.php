@@ -1,30 +1,37 @@
+
 <?php
 
-require_once "ml/GradientBoostingPredictor.php";
+/* LaundryWise file overview: Development/testing page for checking the ML predictor and its outputs. It should not be treated as a resident-facing production page. */
+
+
+require_once __DIR__ . "/ml/GradientBoostingPredictor.php";
 
 try {
 
+    // Load the exported Gradient Boosting model
     $modelPath = __DIR__ . "/ml/gradient_boosting_model_php.json";
 
-    $predictor = new GradientBoostingPredictor(
-        $modelPath
-    );
+    if (!file_exists($modelPath)) {
+        throw new Exception("Model JSON file not found: " . $modelPath);
+    }
 
-    /*
-     * Test input
-     */
-    $resourceId = "WM1";
-    $resourceType = "Washing Machine";
-    $dayOfWeek = "Friday";
+    $predictor = new GradientBoostingPredictor($modelPath);
 
-    $hour = 18;
-    $isWeekend = 0;
+    // Test input: DR1, Saturday, 14:00
+    $resourceId = "DR1";
+    $resourceType = "Dryer";
+    $dayOfWeek = "Saturday";
 
+    $hour = 14;
+    $isWeekend = 1;
+
+    // Historical booking features
     $previousWeekBooking = 3.0;
     $previous2WeeksBooking = 3.0;
     $previous3WeeksBooking = 3.0;
     $previous3WeeksAverage = 3.0;
 
+    // Generate prediction
     $prediction = $predictor->predict(
         $resourceId,
         $resourceType,
@@ -37,33 +44,31 @@ try {
         $previous3WeeksAverage
     );
 
-    echo "<h1>ML Prediction Test</h1>";
+    // Display results
+    echo "<h1>Gradient Boosting Prediction Test</h1>";
 
-    echo "<p><strong>Resource:</strong> "
-        . htmlspecialchars($resourceId)
-        . "</p>";
+    echo "<h2>Test Input</h2>";
 
-    echo "<p><strong>Type:</strong> "
-        . htmlspecialchars($resourceType)
-        . "</p>";
+    echo "<p>Resource ID: " . htmlspecialchars($resourceId) . "</p>";
+    echo "<p>Resource Type: " . htmlspecialchars($resourceType) . "</p>";
+    echo "<p>Day: " . htmlspecialchars($dayOfWeek) . "</p>";
+    echo "<p>Hour: " . htmlspecialchars((string)$hour) . ":00</p>";
+    echo "<p>Weekend: " . $isWeekend . "</p>";
 
-    echo "<p><strong>Day:</strong> "
-        . htmlspecialchars($dayOfWeek)
-        . "</p>";
+    echo "<p>Previous Week: " . $previousWeekBooking . "</p>";
+    echo "<p>Previous 2 Weeks: " . $previous2WeeksBooking . "</p>";
+    echo "<p>Previous 3 Weeks: " . $previous3WeeksBooking . "</p>";
+    echo "<p>Previous 3-Week Average: " . $previous3WeeksAverage . "</p>";
 
-    echo "<p><strong>Hour:</strong> "
-        . htmlspecialchars($hour)
-        . ":00</p>";
+    echo "<h2>Prediction Result</h2>";
 
-    echo "<p><strong>Predicted Demand:</strong> "
-        . number_format($prediction, 6)
-        . "</p>";
+    echo "<p><strong>Predicted Demand: "
+        . number_format((float)$prediction, 6)
+        . "</strong></p>";
 
 } catch (Throwable $e) {
 
-    echo "<h1>ML Test Error</h1>";
+    echo "<h1>Prediction Test Error</h1>";
 
-    echo "<p>"
-        . htmlspecialchars($e->getMessage())
-        . "</p>";
+    echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
 }

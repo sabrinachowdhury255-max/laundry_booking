@@ -1,11 +1,16 @@
 <?php
 
+/* LaundryWise file overview: Processes a resident cancellation and verifies ownership/status before updating the booking, so residents cannot cancel another person’s booking. */
+
+
+/* Explanation: Starts or resumes the session so the page can identify the signed-in resident and enforce access control. */
 session_start();
 
 require_once "config/database.php";
 
 // Make sure the resident is logged in
 if (!isset($_SESSION["user_id"])) {
+    /* Explanation: Redirects the browser after processing, commonly to prevent resubmitting a form or to enforce login flow. */
     header("Location: login.php");
     exit();
 }
@@ -27,6 +32,7 @@ $sql = "SELECT id, booking_date, start_time, end_time, status
         AND user_id = ?";
 
 $stmt = $conn->prepare($sql);
+/* Explanation: Binds user-provided values as parameters, helping prevent SQL injection and keeping values separate from SQL syntax. */
 $stmt->bind_param("ii", $booking_id, $user_id);
 $stmt->execute();
 

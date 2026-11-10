@@ -28,7 +28,7 @@ class GradientBoostingPredictor
         "numerical__previous_week_booking",
         "numerical__previous_2_weeks_booking",
         "numerical__previous_3_weeks_booking",
-        "numerical__previous_3_weeks_average"
+        "numerical__previous_3_week_average"
     ];
 
     public function __construct(string $modelPath)
