@@ -1,0 +1,14 @@
+
+FROM dunglas/frankenphp:php8.3
+
+WORKDIR /app
+
+COPY . .
+
+RUN install-php-extensions mysqli pdo_mysql
+
+ENV SERVER_NAME=:80
+
+EXPOSE 80
+
+CMD ["frankenphp", "php-server", "--root", "/app", "--listen", "0.0.0.0:80"]
